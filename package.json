@@ -1,18 +1,18 @@
 {
-  "name": "app_server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "dev": "nodemon yarn start",
-    "start": "yarn run index.js"
-  },
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "5.11.15",
-    "nodemon": "^2.0.7"
-  }
+    "name": "app_server",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "nodemon yarn start",
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "5.11.15",
+        "nodemon": "^2.0.7"
+    }
 }
