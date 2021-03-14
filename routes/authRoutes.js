@@ -29,7 +29,7 @@ router.post('/signup', async (request, response) => {
         const token = jwt.sign({ userId: user._id }, 'This_is_a_secret_key!');
         response.json({ token });
     } catch (error) {
-        return response.status(422).json({ error: error });
+        return response.status(422).json({ error: error.message });
     }
 });
 
@@ -37,9 +37,9 @@ router.post('/signin', async (request, response) => {
     const { email, password } = request.body;
 
     if (!email || !password) {
-        return response.status(422).json({
-            error: 'Please provide a valid email and password',
-        });
+        return response
+            .status(422)
+            .json({ error: 'Please provide a valid email and password' });
     }
 
     const user = await User.findOne({ email });
