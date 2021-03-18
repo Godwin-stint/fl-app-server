@@ -30,5 +30,9 @@ app.get('/', requireAuth, (request, response) => {
     response.json({ email: request.user.email });
 });
 
+app.get('/resume-download', (request, response) => {
+    response.download('config/emmanuel-cv.docx');
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
