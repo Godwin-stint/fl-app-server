@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
     },
     last_name: {
         type: String,
-        required: true
+        required: true,
     },
     phoneNumber: {
         type: String,
-        unique: true
+        unique: true,
     },
     date_of_birth: {
         type: String,
@@ -25,10 +25,14 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    membershipType: {
+        type: String,
+        default: 'new memeber',
+    },
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
     const user = this;
 
     if (!user.isModified('password')) {
@@ -36,7 +40,9 @@ userSchema.pre('save', function(next) {
     }
 
     bcrypt.genSalt(10, (error, salt) => {
-        if (error) { return next(error) };
+        if (error) {
+            return next(error);
+        }
 
         bcrypt.hash(user.password, salt, (error, hash) => {
             if (error) {
@@ -45,22 +51,26 @@ userSchema.pre('save', function(next) {
 
             user.password = hash;
             next();
-        }); 
+        });
     });
 });
 
 userSchema.methods.comparePassword = function (candidatePassword) {
     const user = this;
-  
+
     return new Promise((resolve, reject) => {
-      bcrypt.compare(candidatePassword, user.password, (error, isMatch) => {
-        if (error) { return reject(error) }
-  
-        if (!isMatch) { return reject(false) }
-  
-        resolve(true);
-      });
+        bcrypt.compare(candidatePassword, user.password, (error, isMatch) => {
+            if (error) {
+                return reject(error);
+            }
+
+            if (!isMatch) {
+                return reject(false);
+            }
+
+            resolve(true);
+        });
     });
-  };
+};
 
 mongoose.model('User', userSchema);
