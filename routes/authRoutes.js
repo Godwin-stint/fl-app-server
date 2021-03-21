@@ -27,7 +27,7 @@ router.post('/signup', async (request, response) => {
         await user.save();
 
         const token = jwt.sign({ userId: user._id }, 'This_is_a_secret_key!');
-        response.send({ token });
+        response.send({ token, user });
     } catch (error) {
         return response.status(422).send({ error: error });
     }
