@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    membershipType: {
+    membership_type: {
         type: String,
         default: 'new memeber',
     },
