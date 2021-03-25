@@ -19,7 +19,7 @@ async function mailer(first_name, email, email_text) {
 
 	// send mail with defined transport object
 	let info = await transporter.sendMail({
-		from: '"Confirm First Love App Email" <no-reply@email.com>', // sender address
+		from: '"Confirm First Love App Email" <prayerprojectt@gmail.com>', // sender address
 		to: `${email}`, // list of receivers
 		subject: `${first_name}'s Account Confirmation`, // Subject line
 		text: 'Confirmation email', // plain text body
