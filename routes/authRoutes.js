@@ -12,7 +12,7 @@ router.post('/signup', async (request, response) => {
 		password,
 		first_name,
 		last_name,
-		phoneNumber,
+		phone_number,
 		date_of_birth,
 	} = request.body;
 
@@ -22,7 +22,7 @@ router.post('/signup', async (request, response) => {
 			password,
 			first_name,
 			last_name,
-			phoneNumber,
+			phone_number,
 			date_of_birth,
 		});
 		await user.save();
