@@ -14,6 +14,7 @@ router.post('/signup', async (request, response) => {
 		last_name,
 		phone_number,
 		date_of_birth,
+		membership_type,
 	} = request.body;
 
 	try {
@@ -24,6 +25,7 @@ router.post('/signup', async (request, response) => {
 			last_name,
 			phone_number,
 			date_of_birth,
+			membership_type,
 		});
 		await user.save();
 
