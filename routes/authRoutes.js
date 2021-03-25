@@ -38,7 +38,7 @@ router.post('/signup', async (request, response) => {
             <h2>Click on this to confirm your email: <a href="https://fl-app-v1.herokuapp.com/confirmation/${user._id}">CLICK THIS TO CONFIRM YOUR EMAIL</a>
             <br />
             <p>Contact me for any questions</p>`;
-		mailer(first_name, email, emailBody);
+		mailer(first_name, user.email, emailBody);
 	} catch (error) {
 		return response.status(422).send({ error });
 	}
