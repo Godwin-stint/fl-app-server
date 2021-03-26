@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 // https://www.youtube.com/watch?v=Va9UKGs1bwI
 // this video helped
 
-async function mailer(first_name, email, email_text) {
+async function mailer(first_name, email = '', email_text) {
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
 		service: 'gmail',

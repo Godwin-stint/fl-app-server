@@ -77,6 +77,7 @@ router.get('/confirmation/:id', async (request, response) => {
 		const user = await User.findByIdAndUpdate(
 			{ _id: id },
 			{ email_confirmed: true, account_confirmed: Date.now() },
+			{ useFindAndModify: false },
 			(error, data) => {
 				if (error) {
 					console.log(`error`, error);
