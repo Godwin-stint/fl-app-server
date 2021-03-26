@@ -14,7 +14,7 @@ async function mailer(first_name, email, email_text) {
 		},
 		host: 'smtp.gmail.com',
 		tls: {
-			rejectUnauthorized: false,
+			rejectUnauthorized: true,
 		},
 	});
 

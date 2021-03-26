@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { mailer } = require('../config/mailer');
 const User = mongoose.model('User');
+const path = require('path');
 
 const router = express.Router();
 
@@ -69,13 +70,24 @@ router.post('/signin', async (request, response) => {
 	}
 });
 
-router.get('/confimation/:id', async (request, response) => {
+router.get('/confirmation/:id', async (request, response) => {
 	const id = request.params.id;
 
 	try {
-		const user = await User.findByIdAndUpdate(id, { email_confirmed: true });
+		const user = await User.findByIdAndUpdate(
+			{ _id: id },
+			{ email_confirmed: true },
+			(error, data) => {
+				if (error) {
+					console.log(`error`, error);
+				} else {
+					return data;
+				}
+			}
+		);
 
-		response.sendFile('views/confimation.html');
+		console.log(`user`, user);
+		response.sendFile(path.join(__dirname, '..', 'views', 'confirmation.html'));
 	} catch (error) {
 		return response.send({ error: 'There was no user' });
 	}

@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: 'new member',
 	},
-	email_confimed: {
+	email_confirmed: {
 		type: Boolean,
 		default: false,
 	},
