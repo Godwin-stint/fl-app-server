@@ -69,7 +69,7 @@ router.post('/signin', async (request, response) => {
 	}
 });
 
-router.post('/confimation/:id', async (request, response) => {
+router.get('/confimation/:id', async (request, response) => {
 	const id = request.params.id;
 
 	try {

@@ -7,11 +7,12 @@ async function mailer(first_name, email, email_text) {
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
 		service: 'gmail',
-		secure: false, // true for 465, false for other ports
+		secure: true, // true for 465, false for other ports
 		auth: {
-			user: `${process.env.EMAIL}`, // generated ethereal user
-			pass: `${process.env.PASSWORD}`, // generated ethereal password
+			user: process.env.EMAIL, // generated ethereal user
+			pass: process.env.PASSWORD, // generated ethereal password
 		},
+		host: 'smtp.gmail.com',
 		tls: {
 			rejectUnauthorized: false,
 		},
@@ -19,8 +20,8 @@ async function mailer(first_name, email, email_text) {
 
 	// send mail with defined transport object
 	let info = await transporter.sendMail({
-		from: '"Confirm First Love App Email" <prayerprojectt@gmail.com>', // sender address
-		to: `${email}`, // list of receivers
+		from: '"Confirm First Love App Email" <no-reply@email.com>', // sender address
+		to: email, // list of receivers
 		subject: `${first_name}'s Account Confirmation`, // Subject line
 		text: 'Confirmation email', // plain text body
 		html: `${email_text}`, // html body
