@@ -34,6 +34,8 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
+	account_created: { type: Date, default: Date.now() },
+	account_confirmed: { type: Date },
 });
 
 userSchema.pre('save', function (next) {
