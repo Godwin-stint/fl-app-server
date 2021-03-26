@@ -13,9 +13,7 @@ async function mailer(first_name, email, email_text) {
 			pass: process.env.PASSWORD, // generated ethereal password
 		},
 		host: 'smtp.gmail.com',
-		tls: {
-			rejectUnauthorized: true,
-		},
+		port: 465,
 	});
 
 	// send mail with defined transport object
