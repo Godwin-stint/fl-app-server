@@ -45,6 +45,17 @@ router.post('/signup', async (request, response) => {
 	}
 });
 
+router.post('/signedin', async (request, response) => {
+	const { id } = request.body;
+
+	if (!id) {
+		return response.status(422).send({ error: 'Something is wrong here' });
+	}
+
+	const user = await User.findById({ _id: id });
+	response.send(user);
+});
+
 router.post('/signin', async (request, response) => {
 	const { email, password } = request.body;
 
