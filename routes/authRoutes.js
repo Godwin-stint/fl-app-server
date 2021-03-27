@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { mailer } = require('../config/mailer');
 const User = mongoose.model('User');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
@@ -103,6 +104,43 @@ router.get('/confirmation/:id', async (request, response) => {
 	} catch (error) {
 		return response.send({ error: 'There was no user' });
 	}
+});
+
+router.post('/password-reset', async (request, response) => {
+	const { email, password } = request.body;
+
+	if (!email) {
+		response.send({ error: 'Email is incorrect' });
+	}
+
+	if (!password) {
+		response.send({ error: 'Please use a valid password' });
+	}
+
+	bcrypt.genSalt(10, (error, salt) => {
+		if (error) {
+			console.log(`password reset error:`, error);
+		}
+
+		bcrypt.hash(password, salt, (error, hash) => {
+			if (error) {
+				console.log(`password reset error:`, error);
+			}
+
+			User.findOneAndUpdate(
+				{ email },
+				{ password: hash },
+				{ useFindAndModify: false },
+				(error, data) => {
+					if (error) {
+						console.log(`error`, error);
+					} else {
+						response.send(data);
+					}
+				}
+			);
+		});
+	});
 });
 
 module.exports = router;
