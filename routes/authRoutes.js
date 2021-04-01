@@ -16,7 +16,7 @@ router.post('/signup', async (request, response) => {
 		last_name,
 		phone_number,
 		date_of_birth,
-		membership_type,
+		membership_type = 'new member',
 	} = request.body;
 
 	try {
