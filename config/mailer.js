@@ -1,22 +1,20 @@
 const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(
+	process.env.SENDGRID_API_KEY ||
+		'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'
+);
 
-async function mailer(first_name, email = '', email_text) {
+function mailer(first_name, email = '', email_text) {
 	const msg = {
 		to: email,
 		from: 'emmanuel.jnr@outlook.com',
-		subect: `First Love App confirmation`,
+		subject: `First Love App confirmation`,
 		text: `Confirmation email`,
 		html: email_text,
 	};
 
-	try {
-		sgMail.send(msg);
-		console.log(`message sent`);
-	} catch (error) {
-		console.log(`error`, error);
-	}
+	return msg;
 }
 
 // https://www.youtube.com/watch?v=Va9UKGs1bwI
@@ -52,6 +50,6 @@ async function mailer(first_name, email = '', email_text) {
 // 	// Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 // }
 
-mailer().catch(console.error);
+// mailer().catch(console.error);
 
 module.exports = { mailer };
