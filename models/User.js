@@ -34,13 +34,10 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
-<<<<<<< HEAD
-=======
 	center: {
 		type: String,
 		default: '',
 	},
->>>>>>> ebd54be (Added routes for centers)
 	account_created: { type: Date, default: Date.now() },
 	account_confirmed: { type: Date },
 });
