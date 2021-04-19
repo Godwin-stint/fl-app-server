@@ -1,7 +1,15 @@
 require('./models/User');
+<<<<<<< HEAD
 const express = require('express');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+=======
+require('./models/Center');
+const express = require('express');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const centerRoutes = require('./routes/centerRoutes');
+>>>>>>> ebd54be (Added routes for centers)
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const MONGO_URI = require('./config/key');
@@ -26,6 +34,10 @@ mongoose.connection.on(`error`, error => {
 app.use(express.json());
 app.use(authRoutes);
 app.use(userRoutes);
+<<<<<<< HEAD
+=======
+app.use(centerRoutes);
+>>>>>>> ebd54be (Added routes for centers)
 
 // Base route.
 app.get('/', requireAuth, (request, response) => {
