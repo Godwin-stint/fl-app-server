@@ -50,7 +50,7 @@ router.post('/api/center/new-center', async (request, response) => {
 	} = request.body;
 
 	try {
-		const center = new Center({
+		const center = new Centers({
 			leader_first_name,
 			leader_last_name,
 			pastor_first_name,
