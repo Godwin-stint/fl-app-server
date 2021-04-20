@@ -16,7 +16,8 @@ router.post('/signup', async (request, response) => {
 		first_name,
 		last_name,
 		phone_number,
-		membership_type = 'new member',
+		center,
+		membership_type = 'bacenta',
 	} = request.body;
 
 	try {
@@ -26,6 +27,7 @@ router.post('/signup', async (request, response) => {
 			first_name,
 			last_name,
 			phone_number,
+			center,
 			membership_type,
 		});
 		await user.save();
@@ -33,10 +35,10 @@ router.post('/signup', async (request, response) => {
 		const token = jwt.sign({ userId: user._id }, 'This_is_a_secret_key!');
 		response.send({ token, user });
 
-		const emailBody = `<h1>Hello ${first_name}.
+		const emailBody = `<h1>Hi ${first_name}.
+			<br />
             <p>Here is to help you confirm your email address:</p>
-            <br/>
-            <h2>Click on this to confirm your email: <a href="https://fl-app-v1.herokuapp.com/confirmation/${user._id}">CLICK THIS TO CONFIRM YOUR EMAIL</a>
+            <h2>Click on this link to confirm your email: <a href="https://fl-app-v1.herokuapp.com/confirmation/${user._id}">CLICK THIS TO CONFIRM YOUR EMAIL</a>
             <br />
             <p>Contact me for any questions</p>`;
 		await sgMail.send(mailer(first_name, user.email, emailBody));
@@ -49,7 +51,7 @@ router.post('/signedin', async (request, response) => {
 	const { id } = request.body;
 
 	if (!id) {
-		return response.status(422).send({ error: 'Something is wrong here' });
+		return response.status(422).send({ error: 'There was no id provided' });
 	}
 
 	const user = await User.findById({ _id: id });

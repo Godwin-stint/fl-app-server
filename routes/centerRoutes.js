@@ -2,9 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Centers = mongoose.model('Center');
 const User = mongoose.model('User');
+const _ = require('lodash');
 
 const router = express.Router();
 
+// 1. Create a center.✓
+// 2. Add attendance.✓
+// 3. Edit attendance.✓
+// 4. Delete attance.✓
+// 5. Create attendance.✓
+// 6. Get all center details.✓
+
+// Create new member in center.
 router.post('/api/:center/new-member', async (request, response) => {
 	const location = request.params.center;
 	const {
@@ -40,6 +49,7 @@ router.post('/api/:center/new-member', async (request, response) => {
 	}
 });
 
+// Create new center.
 router.post('/api/center/new-center', async (request, response) => {
 	const {
 		leader_first_name,
@@ -66,37 +76,33 @@ router.post('/api/center/new-center', async (request, response) => {
 	}
 });
 
-router.post('/api/:center/attendance/edit/:id', async (request, response) => {
-	const location = request.params.center;
-	const id = request.params.id;
+// Edit single center's attendance details. It takes the
+// attendance object._id and leader's id.
+router.post(
+	'/api/:center/attendance/edit/:id/:leader',
+	async (request, response) => {
+		const location = request.params.center;
+		const id = request.params.id;
+		const leader_id = request.params.leader;
 
-	try {
-		const center = await Centers.findOne({ location });
-		const attendance = center.attendance;
+		try {
+			const center = await Centers.findOne({ location }).then(record => {
+				record.attendance.id(id).set(request.body);
 
-		attendance.map(i => {
-			if (i._id.equals(id)) {
-				i = { ...i, ...request.body };
-				return;
-			}
-		});
+				return record.save();
+			});
 
-		console.log(attendance);
-		response.send(attendance);
-
-		await Centers.findOneAndUpdate(
-			{ location },
-			{ attendance },
-			{ new: true, useFindAndModify: false },
-			(error, result) =>
-				error ? response.send(error.message) : response.send(result)
-		);
-	} catch (error) {
-		console.log(error.message);
-		response.send(error);
+			response.send(
+				center.attendance.filter(record => record.leader_id === leader_id)
+			);
+		} catch (error) {
+			console.log(error.message);
+			response.send(error);
+		}
 	}
-});
+);
 
+// Add new attendance to attendance data.
 router.post('/api/:center/attendance/new', async (request, response) => {
 	const location = request.params.center;
 	const {
@@ -146,16 +152,31 @@ router.post('/api/:center/attendance/new', async (request, response) => {
 	}
 });
 
+// Get all attendance for a particular leader. It accepts the
+// leader's id
 router.get('/api/:center/attendance/:id', async (request, response) => {
 	try {
 		const center = await Centers.findOne({ location: request.params.center });
-		// const user = await User.findOne({_id: request.params.id});
 
 		response.send(
 			center.attendance.filter(obj => obj.leader_id === request.params.id)
 		);
 	} catch (error) {
 		console.log(error.message);
+		response.send(error);
+	}
+});
+
+// Get all attendance as a head leader.
+router.get('/api/:center/attendance', async (request, response) => {
+	const location = request.params.center;
+
+	try {
+		const center = await Centers.findOne({ location });
+
+		response.send(center.members);
+	} catch (error) {
+		console.log(error);
 		response.send(error);
 	}
 });
