@@ -120,20 +120,26 @@ router.post('/api/:center/attendance/new', async (request, response) => {
 
 	try {
 		const center = await Centers.findOne({ location }).then(record => {
-			record.attendance.push({
-				date,
-				attendance_number,
-				attendance_names,
-				number_first_timers,
-				names_first_timers,
-				number_of_converts,
-				names_of_converts,
-				started_nbs,
-				finished_nbs,
-				leader_id,
-			});
+			if (record) {
+				record.attendance.push({
+					date,
+					attendance_number,
+					attendance_names,
+					number_first_timers,
+					names_first_timers,
+					number_of_converts,
+					names_of_converts,
+					started_nbs,
+					finished_nbs,
+					leader_id,
+				});
 
-			return record.save();
+				return record.save();
+			} else {
+				response
+					.status(422)
+					.send({ error: 'There is no center with that name' });
+			}
 		});
 
 		response.send(
@@ -168,7 +174,7 @@ router.get('/api/:center/attendance/:id', async (request, response) => {
 });
 
 // Get all attendance as a head leader.
-router.get('/api/:center/attendance', async (request, response) => {
+router.get('/api/:center/data', async (request, response) => {
 	const location = request.params.center;
 
 	try {

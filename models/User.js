@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
 	},
 	membership_type: {
 		type: String,
-		default: 'new member',
+		default: 'bacenta',
 	},
 	email_confirmed: {
 		type: Boolean,

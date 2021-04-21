@@ -17,7 +17,7 @@ router.post('/signup', async (request, response) => {
 		last_name,
 		phone_number,
 		center,
-		membership_type = 'bacenta',
+		membership_type,
 	} = request.body;
 
 	try {
