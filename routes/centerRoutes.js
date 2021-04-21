@@ -173,6 +173,19 @@ router.get('/api/:center/attendance/:id', async (request, response) => {
 	}
 });
 
+router.get('/api/:center/all-leaders', async (request, response) => {
+	const location = request.params.center;
+
+	try {
+		const users = await User.find({ center: location });
+
+		response.send(users);
+	} catch (error) {
+		console.log(`error for fetching leaders: `, error);
+		response.send(error);
+	}
+});
+
 // Get all attendance as a head leader.
 router.get('/api/:center', async (request, response) => {
 	const location = request.params.center;
