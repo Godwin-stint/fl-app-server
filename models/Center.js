@@ -14,7 +14,7 @@ const memberSchema = new mongoose.Schema(
 const attendanceSchema = new mongoose.Schema(
 	{
 		timestamp: Date,
-		date: { type: String, unique: true },
+		date: { type: Date, unique: true },
 		attendance_number: String,
 		attendance_names: String,
 		number_first_timers: String,
