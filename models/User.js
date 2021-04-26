@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: '',
 	},
+	profile_image: {
+		type: String,
+	},
 	account_created: { type: Date, default: Date.now() },
 	account_confirmed: { type: Date },
 });

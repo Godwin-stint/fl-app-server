@@ -29,6 +29,7 @@ app.use(express.json());
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(centerRoutes);
+app.use('/api/user/profile/image/uploads', express.static('uploads'));
 
 // Base route.
 app.get('/', requireAuth, (request, response) => {
