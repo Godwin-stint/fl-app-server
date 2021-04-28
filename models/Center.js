@@ -7,6 +7,7 @@ const memberSchema = new mongoose.Schema(
 		shepherd_first_name: { type: String },
 		shepherd_last_name: { type: String },
 		date_of_birth: { type: String },
+		_leader: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	},
 	{ timestamps: true }
 );
@@ -34,6 +35,7 @@ const centerSchema = new mongoose.Schema(
 		leader_last_name: { type: String, default: '' },
 		pastor_first_name: { type: String, default: '' },
 		pastor_last_name: { type: String, default: '' },
+		_pastor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		location: { type: String, unique: true },
 		attendance: [attendanceSchema],
 		members: [memberSchema],
