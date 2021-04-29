@@ -60,7 +60,7 @@ router.post('/api/user/profile/image/:id', upload, (request, response) => {
 });
 
 // Edit user details.
-router.post('/user/edit/:id', async (request, response) => {
+router.patch('/user/edit/:id', async (request, response) => {
 	const params = request.body;
 	const id = request.params.id;
 
@@ -82,12 +82,25 @@ router.post('/user/edit/:id', async (request, response) => {
 
 			return user;
 		} catch (error) {
+			response.send(error);
 			return { error: 'There was no user' };
 		}
 	};
 
 	// console.log(params, id);
 	response.send(await editUserDetails(id, params));
+});
+
+router.delete('/user/delete/:id', async (request, response) => {
+	const id = request.params.id;
+
+	try {
+		await User.findByIdAndDelete({ _id: id });
+		response.end();
+	} catch (error) {
+		console.log(`error deleting user`, error);
+		response.send(error);
+	}
 });
 
 module.exports = router;
