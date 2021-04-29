@@ -65,7 +65,7 @@ router.post('/api/center/new-center', async (request, response) => {
 			leader_last_name,
 			pastor_first_name,
 			pastor_last_name,
-			location,
+			location: location.replace('Centre ', ''),
 		});
 
 		const centerUpdate = await center.save();
