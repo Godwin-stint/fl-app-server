@@ -32,7 +32,9 @@ router.post('/api/:center/new-member', async (request, response) => {
 			shepherd_last_name,
 		});
 
-		await Centers.findOneAndUpdate({ location }, { members }, { new: true, useFindAndModify: false }, (error, result) => (error ? response.send(error.message) : response.send(result)));
+		await Centers.findOneAndUpdate({ location }, { members }, { new: true, useFindAndModify: false }, (error, result) =>
+			error ? response.send(error.message) : response.send(result)
+		);
 	} catch (error) {
 		console.log(error.message);
 		response.send(error);
@@ -83,7 +85,18 @@ router.post('/api/:center/attendance/edit/:id/:leader', async (request, response
 // Add new attendance to attendance data.
 router.post('/api/:center/attendance/new', async (request, response) => {
 	const location = request.params.center;
-	const { date, attendance_number, attendance_names, number_first_timers, names_first_timers, number_of_converts, names_of_converts, started_nbs, finished_nbs, leader_id } = request.body;
+	const {
+		date,
+		attendance_number,
+		attendance_names,
+		number_first_timers,
+		names_first_timers,
+		number_of_converts,
+		names_of_converts,
+		started_nbs,
+		finished_nbs,
+		leader_id,
+	} = request.body;
 
 	try {
 		const center = await Centers.findOne({ location }).then(record => {
@@ -126,7 +139,7 @@ router.get('/api/:center/attendance/reminder', async (request, response) => {
 	const location = request.params.center;
 
 	const sendNotification = async () => {
-		let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN || 'BQUZbHvK04_1A1jzuJ-GNIrZSNmmLbVScJnEnAvc' });
+		let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
 		let messages = [];
 
 		const users = await User.find({ center: location });
