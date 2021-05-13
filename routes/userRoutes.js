@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const multer = require('multer');
 const path = require('path');
-import { Expo } from 'expo-server-sdk';
+const { Expo } = require('expo-server-sdk');
 
 // Used: https://www.youtube.com/watch?v=srPXMt1Q0nY
 
