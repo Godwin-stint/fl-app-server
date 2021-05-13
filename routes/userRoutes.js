@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const multer = require('multer');
 const path = require('path');
+import { Expo } from 'expo-server-sdk';
 
 // Used: https://www.youtube.com/watch?v=srPXMt1Q0nY
 
@@ -39,25 +40,27 @@ router.post('/api/user/profile/image/:id', upload, (request, response) => {
 
 	console.log(`file:`, request.file.path);
 	try {
-		User.findByIdAndUpdate(
-			{ _id: id },
-			{ profile_image: request.file.path },
-			{ useFindAndModify: false, new: true },
-			(error, data) => {
-				if (error) {
-					response.send(error);
-					console.log(`error`, error);
-				} else {
-					console.log(data);
-					response.send(data);
-				}
+		User.findByIdAndUpdate({ _id: id }, { profile_image: request.file.path }, { useFindAndModify: false, new: true }, (error, data) => {
+			if (error) {
+				response.send(error);
+				console.log(`error`, error);
+			} else {
+				console.log(data);
+				response.send(data);
 			}
-		);
+		});
 	} catch (error) {
 		console.log(error);
 		response.status(422).send(error);
 	}
 });
+
+// Notification details.
+let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN || 'BQUZbHvK04_1A1jzuJ-GNIrZSNmmLbVScJnEnAvc' });
+
+let messages = [];
+for (let pushToken of somePushTokens) {
+}
 
 // Edit user details.
 router.patch('/user/edit/:id', async (request, response) => {
@@ -66,19 +69,14 @@ router.patch('/user/edit/:id', async (request, response) => {
 
 	const editUserDetails = async (id, param) => {
 		try {
-			const user = await User.findByIdAndUpdate(
-				{ _id: id },
-				param,
-				{ useFindAndModify: false },
-				(error, data) => {
-					if (error) {
-						response.send(error);
-						console.log(`error`, error);
-					} else {
-						return data;
-					}
+			const user = await User.findByIdAndUpdate({ _id: id }, param, { useFindAndModify: false }, (error, data) => {
+				if (error) {
+					response.send(error);
+					console.log(`error`, error);
+				} else {
+					return data;
 				}
-			);
+			});
 
 			return user;
 		} catch (error) {
