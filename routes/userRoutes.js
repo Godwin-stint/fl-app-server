@@ -58,9 +58,9 @@ router.post('/api/user/profile/image/:id', upload, (request, response) => {
 // Notification details.
 let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN || 'BQUZbHvK04_1A1jzuJ-GNIrZSNmmLbVScJnEnAvc' });
 
-let messages = [];
-for (let pushToken of somePushTokens) {
-}
+// let messages = [];
+// for (let pushToken of somePushTokens) {
+// }
 
 // Edit user details.
 router.patch('/user/edit/:id', async (request, response) => {
