@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const multer = require('multer');
 const path = require('path');
-const { Expo } = require('expo-server-sdk');
 
 // Used: https://www.youtube.com/watch?v=srPXMt1Q0nY
 
@@ -54,13 +53,6 @@ router.post('/api/user/profile/image/:id', upload, (request, response) => {
 		response.status(422).send(error);
 	}
 });
-
-// Notification details.
-let expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN || 'BQUZbHvK04_1A1jzuJ-GNIrZSNmmLbVScJnEnAvc' });
-
-// let messages = [];
-// for (let pushToken of somePushTokens) {
-// }
 
 // Edit user details.
 router.patch('/user/edit/:id', async (request, response) => {
