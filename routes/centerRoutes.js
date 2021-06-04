@@ -191,7 +191,7 @@ router.get('/api/:center/attendance/:id', async (request, response) => {
 // Fetch all centers
 router.get('/api/all-centers', async (request, response) => {
 	const centers = await Centers.find();
-	response.send(centers.map(el => el.location));
+	response.send(centers);
 });
 
 // Fetch all leaders.
