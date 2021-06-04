@@ -188,7 +188,15 @@ router.get('/api/:center/attendance/:id', async (request, response) => {
 	}
 });
 
-// Fetch all centers
+// Fetch all centers per leader
+router.get('/api/all-centers/:id', async (request, response) => {
+	const id = request.params.id;
+	const centers = await Centers.find({ _pastor_id: id });
+
+	response.send(centers);
+});
+
+// Fectch all centers
 router.get('/api/all-centers', async (request, response) => {
 	const centers = await Centers.find();
 	response.send(centers);
