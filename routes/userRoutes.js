@@ -39,19 +39,32 @@ router.post('/api/user/profile/image/:id', upload, (request, response) => {
 
 	console.log(`file:`, request.file.path);
 	try {
-		User.findByIdAndUpdate({ _id: id }, { profile_image: request.file.path }, { useFindAndModify: false, new: true }, (error, data) => {
-			if (error) {
-				response.send(error);
-				console.log(`error`, error);
-			} else {
-				console.log(data);
-				response.send(data);
+		User.findByIdAndUpdate(
+			{ _id: id },
+			{ profile_image: request.file.path },
+			{ useFindAndModify: false, new: true },
+			(error, data) => {
+				if (error) {
+					response.send(error);
+					console.log(`error`, error);
+				} else {
+					console.log(data);
+					response.send(data);
+				}
 			}
-		});
+		);
 	} catch (error) {
 		console.log(error);
 		response.status(422).send(error);
 	}
+});
+
+// Return user details
+router.get('/api/user/:id', async (request, response) => {
+	const id = request.params.id;
+
+	const user = await User.findById({ _id: id });
+	response.send(user);
 });
 
 // Edit user details.
