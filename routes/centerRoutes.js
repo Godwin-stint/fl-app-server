@@ -43,14 +43,11 @@ router.post('/api/:center/new-member', async (request, response) => {
 
 // Create new center.
 router.post('/api/center/new-center', async (request, response) => {
-	const { leader_first_name, leader_last_name, pastor_first_name, pastor_last_name, location } = request.body;
+	const { _pastor_id, location } = request.body;
 
 	try {
 		const center = new Centers({
-			leader_first_name,
-			leader_last_name,
-			pastor_first_name,
-			pastor_last_name,
+			_pastor_id,
 			location,
 		});
 
@@ -189,6 +186,12 @@ router.get('/api/:center/attendance/:id', async (request, response) => {
 		console.log(error.message);
 		response.send(error);
 	}
+});
+
+// Fetch all centers
+router.get('/api/all-centers', async (request, response) => {
+	const centers = await Centers.find();
+	response.send(centers.map(el => el.location));
 });
 
 // Fetch all leaders.

@@ -31,11 +31,8 @@ const attendanceSchema = new mongoose.Schema(
 
 const centerSchema = new mongoose.Schema(
 	{
-		leader_first_name: { type: String, default: '' },
-		leader_last_name: { type: String, default: '' },
-		pastor_first_name: { type: String, default: '' },
-		pastor_last_name: { type: String, default: '' },
-		_pastor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		_pastor_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		_leader_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		location: { type: String, unique: true },
 		attendance: [attendanceSchema],
 		members: [memberSchema],
