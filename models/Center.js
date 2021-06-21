@@ -7,7 +7,10 @@ const memberSchema = new mongoose.Schema(
 		shepherd_first_name: { type: String },
 		shepherd_last_name: { type: String },
 		date_of_birth: { type: String },
-		_leader: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		attendended: { type: Boolean },
+		ministered: { type: Boolean },
+		rehearsed: { type: Boolean },
+		_leader_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	},
 	{ timestamps: true }
 );

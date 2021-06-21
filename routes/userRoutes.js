@@ -67,6 +67,14 @@ router.get('/api/user/:id', async (request, response) => {
 	response.send(user);
 });
 
+// Return all pastor + leader
+router.get('/api/pastors-centre-leaders', async (request, response) => {
+	const pastors = await User.find({ membership_type: 'Overseer' });
+	const centre_leaders = await User.find({ membership_type: 'Centre leader' });
+
+	response.send([...pastors, ...centre_leaders]);
+});
+
 // Edit user details.
 router.patch('/user/edit/:id', async (request, response) => {
 	const params = request.body;
