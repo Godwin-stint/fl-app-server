@@ -84,7 +84,16 @@ router.post('/api/:center/attendance/new', async (request, response) => {
 	const location = request.params.center;
 
 	if (location.includes('Sonta')) {
-		const { date, attendance_number, ministered_number, rehearsed_number, leader_id } = request.body;
+		const {
+			date,
+			attendance_names,
+			ministered_names,
+			rehearsed_names,
+			attendance_number,
+			ministered_number,
+			rehearsed_number,
+			leader_id,
+		} = request.body;
 
 		try {
 			const center = await Centers.findOne({ location }).then(record => {
