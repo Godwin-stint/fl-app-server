@@ -98,7 +98,6 @@ router.patch('/user/edit/:id', async (request, response) => {
 		}
 	};
 
-	// console.log(params, id);
 	response.send(await editUserDetails(id, params));
 });
 

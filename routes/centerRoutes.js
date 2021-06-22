@@ -79,55 +79,86 @@ router.post('/api/:center/attendance/edit/:id/:leader', async (request, response
 	}
 });
 
-// Add new attendance to attendance data.
+// Add new attendance to centre attendance.
 router.post('/api/:center/attendance/new', async (request, response) => {
 	const location = request.params.center;
-	const {
-		date,
-		attendance_number,
-		attendance_names,
-		number_first_timers,
-		names_first_timers,
-		number_of_converts,
-		names_of_converts,
-		started_nbs,
-		finished_nbs,
-		leader_id,
-	} = request.body;
 
-	try {
-		const center = await Centers.findOne({ location }).then(record => {
-			if (record) {
-				record.attendance.push({
-					date,
-					attendance_number,
-					attendance_names,
-					number_first_timers,
-					names_first_timers,
-					number_of_converts,
-					names_of_converts,
-					started_nbs,
-					finished_nbs,
-					leader_id,
-				});
+	if (location.includes('Sonta')) {
+		const { date, attendance_number, ministered_number, rehearsed_number, leader_id } = request.body;
 
-				return record.save();
-			} else {
-				response.status(422).send({ error: 'There is no center with that name' });
-			}
-		});
+		try {
+			const center = await Centers.findOne({ location }).then(record => {
+				if (record) {
+					record.attendance.push({
+						date,
+						attendance_number,
+						attendance_names,
+						ministered_number,
+						ministered_names,
+						rehearsed_names,
+						rehearsed_number,
+						leader_id,
+					});
 
-		response.send(center.attendance.filter(record => record.leader_id === leader_id));
-		// await Centers.findOneAndUpdate(
-		// 	{ location },
-		// 	{ attendance },
-		// 	{ new: true, useFindAndModify: false },
-		// 	(error, result) =>
-		// 		error ? response.send(error.message) : response.send(result)
-		// );
-	} catch (error) {
-		console.log(error.message);
-		response.send(error);
+					return record.save();
+				} else {
+				}
+				response.status(422).send({ error: 'There is no centre with that name' });
+			});
+
+			response.send(center.attendance.filter(record => record.leader_id === leader_id));
+		} catch (error) {
+			console.log('error sending with attendance', error.message);
+			response.send(error);
+		}
+	} else {
+		const {
+			date,
+			attendance_number,
+			attendance_names,
+			number_first_timers,
+			names_first_timers,
+			number_of_converts,
+			names_of_converts,
+			started_nbs,
+			finished_nbs,
+			leader_id,
+		} = request.body;
+
+		try {
+			const center = await Centers.findOne({ location }).then(record => {
+				if (record) {
+					record.attendance.push({
+						date,
+						attendance_number,
+						attendance_names,
+						number_first_timers,
+						names_first_timers,
+						number_of_converts,
+						names_of_converts,
+						started_nbs,
+						finished_nbs,
+						leader_id,
+					});
+
+					return record.save();
+				} else {
+					response.status(422).send({ error: 'There is no center with that name' });
+				}
+			});
+
+			response.send(center.attendance.filter(record => record.leader_id === leader_id));
+			// await Centers.findOneAndUpdate(
+			// 	{ location },
+			// 	{ attendance },
+			// 	{ new: true, useFindAndModify: false },
+			// 	(error, result) =>
+			// 		error ? response.send(error.message) : response.send(result)
+			// );
+		} catch (error) {
+			console.log(error.message);
+			response.send(error);
+		}
 	}
 });
 
@@ -145,7 +176,7 @@ router.get('/api/:center/attendance/reminder', async (request, response) => {
 			messages.push({
 				to: pushToken,
 				sound: 'default',
-				title: 'Fill out data now!',
+				title: 'Submit your data now!',
 				body: 'If you have not already, click here to fill it out',
 			});
 		}
@@ -173,7 +204,7 @@ router.get('/api/:center/attendance/reminder', async (request, response) => {
 	};
 
 	sendNotification();
-	response.send('All done');
+	response.send('Reminder sent sucessfully');
 });
 
 // Get all attendance for a particular leader. It accepts the leader's id

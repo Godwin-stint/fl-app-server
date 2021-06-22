@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
 	},
 	membership_type: {
 		type: String,
+		membership_type: '',
 	},
 	email_confirmed: {
 		type: Boolean,
