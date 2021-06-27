@@ -40,7 +40,7 @@ const centerSchema = new mongoose.Schema(
 	{
 		_pastor_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		_leader_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-		location: { type: String },
+		location: { type: String, unique: false },
 		attendance: [attendanceSchema],
 		members: [memberSchema],
 	},
